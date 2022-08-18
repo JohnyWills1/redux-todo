@@ -3,31 +3,38 @@ import React from 'react';
 import styled from 'styled-components';
 // #endregion Global Imports
 
-// #region Local Imports
-
-// #endregion Local Imports
-
-// #region Interface Imports
-
-// #endregion Interface Imports
-
 type Props = {
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-  value: string;
+    onChange?: (value: string) => void;
+    placeholder?: string;
+    value: string;
+    onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 };
 
-function TextInput({ onChange = () => {}, placeholder, value }: Props) {
-  const TextInputComponent = styled.input`
+const TextInputComponent = styled.input`
     width: 100%;
     border-radius: 4px;
     background-color: transparent;
     border: 2px solid white;
     padding: 1em 1.5em;
     font-size: 1em;
-  `;
+`;
 
-  return <TextInputComponent type='text' onChange={onChange} placeholder={placeholder} value={value} />;
+function TextInput({
+    onChange = () => {},
+    onKeyDown = () => {},
+    placeholder,
+    value,
+}: Props) {
+    return (
+        <TextInputComponent
+            autoFocus
+            type="text"
+            onChange={(e) => onChange(e.target.value)}
+            placeholder={placeholder}
+            value={value}
+            onKeyDown={onKeyDown}
+        />
+    );
 }
 
 export default TextInput;
